@@ -1,0 +1,33 @@
+{
+  "name": "sheetsql",
+  "version": "0.1.0",
+  "description": "KV storage based on LocalStorage like reids.",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "test": "npm run clean && jest",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && tsc && webpack",
+    "prepublish": "npm run build"
+  },
+  "precommit": [
+    "prettier"
+  ],
+  "author": "Joway",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bluebird": "^3.5.26",
+    "@types/jest": "^26.0.0",
+    "bluebird": "^3.5.3",
+    "jest": "^24.5.0",
+    "jest-localstorage-mock": "^2.4.0",
+    "ts-jest": "^24.0.0",
+    "tslint-jike-node": "0.0.18",
+    "typescript": "^3.3.4000",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "googleapis": "^55.0.0"
+  }
+}
