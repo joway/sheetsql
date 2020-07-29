@@ -34,9 +34,9 @@ Your service account JSON key file.
 ### Example
 
 ```typescript
-const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+const db = new Database({ db: '1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s', table: 'Sheet1', keyFile: './google-serviceaccount.json' })
 
-// load data from google spreadsheet
+// load schema and data from google spreadsheet
 await db.load()
 
 // insert multiple documents
