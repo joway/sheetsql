@@ -31,6 +31,12 @@ Every data in sheelsql will be set/get as a string. You need to handle the type 
 
 Your service account JSON key file.
 
+### Install
+
+```
+npm i sheetsql -S
+```
+
 ### Example
 
 ```typescript
