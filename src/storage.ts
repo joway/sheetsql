@@ -56,26 +56,29 @@ export default class GoogleStorage implements IStorage {
 
   _findRows(query?: Query): number[] {
     const queryKeys = _.keys(query)
-    const rowNums = _.map(this.data, (row, rowNum) => {
+    const nums: number[] = []
+
+    _.each(this.data, (row, rowNum) => {
       if (!query || !queryKeys.length) {
-        return rowNum
+        nums.push(rowNum)
+        return
       }
 
       for (const fieldName of queryKeys) {
         if (!this.schemaMetaStore[fieldName]) {
-          return null
+          return
         }
         const colNum = this.schemaMetaStore[fieldName].col
         const field = row[colNum]
         if (_.toString(field) !== _.toString(query[fieldName])) {
-          return null
+          return
         }
       }
 
-      return rowNum
+      nums.push(rowNum)
     })
 
-    return _.compact(rowNums)
+    return nums
   }
 
   _rowToDoc = (row: string[]): Document => {
@@ -209,12 +212,10 @@ export default class GoogleStorage implements IStorage {
       throw new Errors.StorageFormatError()
     }
 
-    const schema = new Array(rows[0].length)
+    const schema = _.map(rows[0], (colName) => ({ name: colName }))
+
     const schemaMetaStore: { [key: string]: { col: number } } = {}
     for (let colNum = 0; colNum < rows[0].length; ++colNum) {
-      schema[colNum] = {
-        name: rows[0][colNum],
-      }
       schemaMetaStore[rows[0][colNum]] = { col: colNum }
     }
 

@@ -9,6 +9,13 @@ beforeEach(async () => {
   await db.remove({})
 })
 
+afterAll(async () => {
+  const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+  await db.load()
+
+  await db.remove({})
+})
+
 test('db simple', async () => {
   const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
   await db.load()
