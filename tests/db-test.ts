@@ -2,6 +2,13 @@ import Database from '../src'
 
 const DB = '1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s'
 
+beforeEach(async () => {
+  const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+  await db.load()
+
+  await db.remove({})
+})
+
 test('db simple', async () => {
   const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
   await db.load()
@@ -41,4 +48,51 @@ test('db simple', async () => {
     name: 'joway',
   })
   expect(docs.length).toBe(0)
-}, 10000)
+}, 30000)
+
+test('db find', async () => {
+  const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+  await db.load()
+
+  let docs = await db.insert([
+    {
+      name: 'jack',
+      age: 18,
+    },
+    {
+      name: 'mark',
+      age: 21,
+    },
+    {
+      name: 'jason',
+      age: 18,
+      no: 1,
+    },
+  ])
+  expect(docs.length).toBe(3)
+
+  docs = await db.find({
+    age: 18,
+  })
+  expect(docs.length).toBe(2)
+
+  docs = await db.find({
+    age: '18',
+  })
+  expect(docs.length).toBe(2)
+
+  docs = await db.find({})
+  expect(docs.length).toBe(3)
+
+  docs = await db.find({ no: 1 })
+  expect(docs.length).toBe(0)
+
+  docs = await db.find({ name: '' })
+  expect(docs.length).toBe(0)
+
+  let doc = await db.updateOne({ name: 'jack' }, { name: '' })
+  expect(doc!.name).toBe('')
+
+  docs = await db.find({ name: '' })
+  expect(docs.length).toBe(1)
+}, 30000)

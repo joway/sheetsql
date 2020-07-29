@@ -55,18 +55,23 @@ export default class GoogleStorage implements IStorage {
   }
 
   _findRows(query?: Query): number[] {
+    const queryKeys = _.keys(query)
     const rowNums = _.map(this.data, (row, rowNum) => {
-      if (!query || !_.keys(query).length) {
+      if (!query || !queryKeys.length) {
         return rowNum
       }
 
-      for (let colNum = 0; colNum < row.length; ++colNum) {
+      for (const fieldName of queryKeys) {
+        if (!this.schemaMetaStore[fieldName]) {
+          return null
+        }
+        const colNum = this.schemaMetaStore[fieldName].col
         const field = row[colNum]
-        const fieldName = this.schema[colNum].name
-        if (query[fieldName] && _.toString(field) !== query[fieldName]) {
+        if (_.toString(field) !== _.toString(query[fieldName])) {
           return null
         }
       }
+
       return rowNum
     })
 
@@ -86,7 +91,9 @@ export default class GoogleStorage implements IStorage {
   _docToRow = (doc: Document): string[] => {
     const row = new Array(this.schema.length)
     for (const fieldName of _.keys(doc)) {
-      row[this.schemaMetaStore[fieldName].col] = _.toString(doc[fieldName])
+      if (this.schemaMetaStore[fieldName]) {
+        row[this.schemaMetaStore[fieldName].col] = _.toString(doc[fieldName])
+      }
     }
     return row
   }
