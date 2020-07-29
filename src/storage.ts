@@ -92,7 +92,7 @@ export default class GoogleStorage implements IStorage {
   }
 
   async find(query?: Query): Promise<Document[]> {
-    await this._syncData()
+    await this._checkCacheTimeout()
 
     const rowNums = this._findRows(query)
     const docs = _.map(rowNums, (rowNum) => this._rowToDoc(this.data[rowNum]))
@@ -100,7 +100,7 @@ export default class GoogleStorage implements IStorage {
   }
 
   async insert(docs: Document[]): Promise<Document[]> {
-    await this._syncData()
+    await this._checkCacheTimeout()
 
     const rows = _.map(docs, this._docToRow)
 
@@ -122,7 +122,7 @@ export default class GoogleStorage implements IStorage {
     toUpdate: Document,
     opts: { updatedOnce: boolean } = { updatedOnce: false },
   ): Promise<Document[]> {
-    await this._syncData()
+    await this._checkCacheTimeout()
 
     const rowNums = this._findRows(query)
     const { updatedOnce } = opts
@@ -157,7 +157,7 @@ export default class GoogleStorage implements IStorage {
   }
 
   async remove(query: Query): Promise<Document[]> {
-    await this._syncData()
+    await this._checkCacheTimeout()
 
     const rowNums = this._findRows(query)
     const emptyDoc = _.mapValues(this.schemaMetaStore, () => '')
@@ -184,7 +184,7 @@ export default class GoogleStorage implements IStorage {
     return oldDoc
   }
 
-  async _syncData(): Promise<boolean> {
+  async _checkCacheTimeout(): Promise<boolean> {
     if (!this.lastUpdated || Date.now() - this.lastUpdated.getTime() >= this.cacheTimeout) {
       await this.load()
       return true
