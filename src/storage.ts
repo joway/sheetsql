@@ -19,8 +19,11 @@ export interface IStorage {
 export interface IStorageOptions {
   db: string // google spreadsheet id
   table?: string
+
   apiKey?: string
   keyFile?: string
+
+  cacheTimeoutMs?: number // ms
 }
 
 export default class GoogleStorage implements IStorage {
@@ -31,8 +34,13 @@ export default class GoogleStorage implements IStorage {
   private schemaMetaStore: { [name: string]: { col: number } } = {}
   private data: string[][] = new Array()
   private lastUpdated: Date | null = null
+  private cacheTimeout = 5000
 
   constructor(opts: IStorageOptions) {
+    if (!opts.apiKey && !opts.keyFile) {
+      throw new Errors.StorageFormatError()
+    }
+
     this.sheets = google.sheets({
       version: 'v4',
       auth: opts.apiKey
@@ -177,7 +185,7 @@ export default class GoogleStorage implements IStorage {
   }
 
   async _syncData(): Promise<boolean> {
-    if (!this.lastUpdated || Date.now() - this.lastUpdated.getTime() >= 5000) {
+    if (!this.lastUpdated || Date.now() - this.lastUpdated.getTime() >= this.cacheTimeout) {
       await this.load()
       return true
     }

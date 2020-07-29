@@ -40,7 +40,12 @@ npm i sheetsql -S
 ### Example
 
 ```typescript
-const db = new Database({ db: '1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s', table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+const db = new Database({
+  db: '1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s',
+  table: 'Sheet1', // optional, default = Sheet1
+  keyFile: './google-serviceaccount.json',
+  cacheTimeoutMs: 5000, // optional, default = 5000
+})
 
 // load schema and data from google spreadsheet
 await db.load()
