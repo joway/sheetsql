@@ -1,7 +1,4 @@
-import LocalCache from './cache'
-import LocalStorage from './storage'
+import Database from './db'
 
-export default LocalStorage
-export {
-  LocalCache,
-}
+export default Database
+export { Database }
