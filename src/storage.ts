@@ -30,7 +30,7 @@ export default class GoogleStorage implements IStorage {
   private sheets: sheets_v4.Sheets
   private db: string
   private table: string
-  private schema: { name: string }[] = []
+  private schema: string[] = []
   private schemaMetaStore: { [name: string]: { col: number } } = {}
   private data: string[][] = new Array()
   private lastUpdated: Date | null = null
@@ -85,7 +85,7 @@ export default class GoogleStorage implements IStorage {
     const doc: Document = {}
     for (let colNum = 0; colNum < row.length; ++colNum) {
       const field = row[colNum]
-      const fieldName = this.schema[colNum].name
+      const fieldName = this.schema[colNum]
       doc[fieldName] = _.toString(field)
     }
     return doc
@@ -212,12 +212,13 @@ export default class GoogleStorage implements IStorage {
       throw new Errors.StorageFormatError()
     }
 
-    const schema = _.map(rows[0], (colName) => ({ name: colName }))
-
-    const schemaMetaStore: { [key: string]: { col: number } } = {}
-    for (let colNum = 0; colNum < rows[0].length; ++colNum) {
-      schemaMetaStore[rows[0][colNum]] = { col: colNum }
-    }
+    const schema = rows[0]
+    const schemaMetaStore: { [key: string]: { col: number } } = _.zipObject(
+      rows[0],
+      _.map(rows[0], (_, colNum) => ({
+        col: colNum,
+      })),
+    )
 
     this.schema = schema
     this.schemaMetaStore = schemaMetaStore
