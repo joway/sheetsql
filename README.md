@@ -13,7 +13,7 @@ Google Spreadsheet as a Database.
 
 ## Usage
 
-### Concept
+### Concepts
 
 #### db
 
