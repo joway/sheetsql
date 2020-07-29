@@ -22,8 +22,8 @@
     "@types/lodash": "^4.14.158",
     "@types/nedb": "^1.8.10",
     "bluebird": "^3.5.3",
-    "jest": "^24.5.0",
-    "ts-jest": "^24.0.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^26.1.4",
     "tslint-jike-node": "0.0.18",
     "typescript": "^3.3.4000"
   },
