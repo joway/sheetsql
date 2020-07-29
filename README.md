@@ -7,8 +7,9 @@ Google Spreadsheet as a Database.
 
 ## Requirements
 
-1. Create a Google Spreadsheet and populate the first row with the columns names, here is an [Example Sheet](https://docs.google.com/spreadsheets/d/1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s/edit?usp=sharing)
-2. 
+1. Create a Google Spreadsheet and populate the first row with the columns names, here is an [Example Sheet](https://docs.google.com/spreadsheets/d/1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s/edit?usp=sharing).
+2. Create a [Google Cloud Service Account](https://cloud.google.com/docs/authentication/production) and download the JSON file that contains your key.
+3. Find your service account email in [credentials console](https://console.cloud.google.com/apis/credentials) which similar with `account-name@project-name.iam.gserviceaccount.com`. After that, share your sheets to this email, and make sure you have assigned it as an editor.
 
 ## Usage
 
@@ -24,14 +25,21 @@ Google Spreadsheet as a Database.
 
 #### data type
 
-Every data in sheelsql will be set/get as a string. You should handle the schema type on your side.
+Every data in sheelsql will be set/get as a string. You need to handle the type mapping on your side.
+
+#### keyFile
+
+Your service account JSON key file.
 
 ### Example
 
 ```typescript
-const db = new Database({ db: DB, keyFile: './google-serviceaccount.json' })
+const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+
+// load data from google spreadsheet
 await db.load()
 
+// insert multiple documents
 let docs = await db.insert([
   {
     name: 'joway',
@@ -39,6 +47,7 @@ let docs = await db.insert([
   },
 ])
 
+// find documents and update them
 docs = await db.update(
   {
     name: 'joway',
@@ -48,10 +57,15 @@ docs = await db.update(
   },
 )
 
+// find documents
 docs = await db.find({
   name: 'joway',
 })
 
+// find all documents
+docs = await db.find({})
+
+// find documents and remove them
 docs = await db.remove({
   name: 'joway',
 })
