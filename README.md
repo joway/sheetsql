@@ -25,7 +25,7 @@ Google Spreadsheet as a Database.
 
 #### data type
 
-Every data in sheelsql will be set/get as a string. You need to handle the type mapping on your side.
+Every data in sheetsql will be set/get as a string. You need to handle the type mapping on your side.
 
 #### keyFile
 
