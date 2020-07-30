@@ -81,3 +81,15 @@ docs = await db.remove({
   name: 'joway',
 })
 ```
+
+
+
+### Using a Proxy
+
+Set the following environment variables to proxy http/https requests
+
+- `HTTP_PROXY` / `http_proxy`
+- `HTTPS_PROXY` / `https_proxy`
+
+[See more information](https://github.com/googleapis/google-api-nodejs-client#using-a-proxy)
+
