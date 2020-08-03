@@ -20,9 +20,11 @@ export interface IStorageOptions {
   db: string // google spreadsheet id
   table?: string
 
+  // google spreadsheet settings
   apiKey?: string
   keyFile?: string
 
+  // storage settings
   cacheTimeoutMs?: number // ms
 }
 
