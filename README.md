@@ -9,7 +9,10 @@ Google Spreadsheet as a Database.
 
 1. Create a Google Spreadsheet and populate the first row with the columns names, here is an [Example Sheet](https://docs.google.com/spreadsheets/d/1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s/edit?usp=sharing).
 2. Create a [Google Cloud Service Account](https://cloud.google.com/docs/authentication/production) and download the JSON file that contains your key.
-3. Find your service account email in [credentials console](https://console.cloud.google.com/apis/credentials) which similar with `account-name@project-name.iam.gserviceaccount.com`. After that, share your sheets to this email, and make sure you have assigned it as an editor.
+3. Find your service account email in [credentials console](https://console.cloud.google.com/apis/credentials) which similar with `account-name@project-name.iam.gserviceaccount.com`. 
+4. Share your sheets to the above email, and make sure you have assigned it as an editor.
+
+![](./policy.png)
 
 ## Usage
 

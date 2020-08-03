@@ -2,22 +2,26 @@ import Database from '../src'
 
 const DB = '1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s'
 
+function getDB() {
+  return new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+}
+
 beforeEach(async () => {
-  const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+  const db = getDB()
   await db.load()
 
   await db.remove({})
 })
 
 afterAll(async () => {
-  const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+  const db = getDB()
   await db.load()
 
   await db.remove({})
 })
 
 test('db simple', async () => {
-  const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+  const db = getDB()
   await db.load()
 
   let docs = await db.insert([
@@ -58,7 +62,7 @@ test('db simple', async () => {
 }, 30000)
 
 test('db find', async () => {
-  const db = new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+  const db = getDB()
   await db.load()
 
   let docs = await db.insert([

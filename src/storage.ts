@@ -40,17 +40,18 @@ export default class GoogleStorage implements IStorage {
 
   constructor(opts: IStorageOptions) {
     if (!opts.apiKey && !opts.keyFile) {
-      throw new Errors.StorageFormatError()
+      throw new Errors.StorageOptionsError()
     }
 
+    const auth = opts.apiKey
+      ? opts.apiKey
+      : new google.auth.GoogleAuth({
+          scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+          keyFile: opts.keyFile,
+        })
     this.sheets = google.sheets({
       version: 'v4',
-      auth: opts.apiKey
-        ? opts.apiKey
-        : new google.auth.GoogleAuth({
-            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-            keyFile: opts.keyFile,
-          }),
+      auth: auth || '',
     })
     this.db = opts.db
     this.table = opts.table || 'Sheet1'

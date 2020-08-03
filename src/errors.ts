@@ -1,6 +1,7 @@
 import { getErrors } from './utils/error'
 
 const errors = [
+  'StorageOptionsError',
   'StorageFormatError',
   'StorageOptionError',
 ]
