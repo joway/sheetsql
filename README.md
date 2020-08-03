@@ -5,6 +5,12 @@
 
 Google Spreadsheet as a Database.
 
+## Purpose
+
+In the past, I often asked by non-technical colleagues to do some DB scripts jobs to mapping their spreadsheets data to the production database. And when their data changes the same work needs to be done again. Since these data are not changed too frequently(compared with other online data), it's also not worth to make a content management system for them.
+
+But why don't make their spreadsheets as a real production database?  That's what ["Single source of truth"](https://en.wikipedia.org/wiki/Single_source_of_truth) means. What's more, you even could write back some statistical data like "Page View" to the spreadsheets, so they could see the feedback clearly and continue to optimize the content.
+
 ## Requirements
 
 1. Create a Google Spreadsheet and populate the first row with the columns names, here is an [Example Sheet](https://docs.google.com/spreadsheets/d/1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s/edit?usp=sharing).
