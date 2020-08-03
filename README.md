@@ -82,14 +82,13 @@ docs = await db.remove({
 })
 ```
 
-
-
 ### Using a Proxy
 
-Set the following environment variables to proxy http/https requests
+sheetsql depend on `googleapis` lib in which you can set the following environment variables to proxy http/https requests:
 
 - `HTTP_PROXY` / `http_proxy`
 - `HTTPS_PROXY` / `https_proxy`
 
-[See more information](https://github.com/googleapis/google-api-nodejs-client#using-a-proxy)
+The two environment variables could let your all requests using the proxy. If that is not your expected behavior and you only need to proxy google APIs, set `NO_PROXY=*`.
 
+Here is the [discuss](https://github.com/joway/sheetsql/issues/4).
