@@ -36,7 +36,7 @@ export default class GoogleStorage implements IStorage {
   private schemaMetaStore: { [name: string]: { col: number } } = {}
   private data: string[][] = new Array()
   private lastUpdated: Date | null = null
-  private cacheTimeout = 5000
+  private cacheTimeoutMs: number
 
   constructor(opts: IStorageOptions) {
     if (!opts.apiKey && !opts.keyFile) {
@@ -55,6 +55,7 @@ export default class GoogleStorage implements IStorage {
     })
     this.db = opts.db
     this.table = opts.table || 'Sheet1'
+    this.cacheTimeoutMs = opts.cacheTimeoutMs || 5000
   }
 
   _findRows(query?: Query): number[] {
@@ -198,7 +199,7 @@ export default class GoogleStorage implements IStorage {
   }
 
   async _checkCacheTimeout(): Promise<boolean> {
-    if (!this.lastUpdated || Date.now() - this.lastUpdated.getTime() >= this.cacheTimeout) {
+    if (!this.lastUpdated || Date.now() - this.lastUpdated.getTime() >= this.cacheTimeoutMs) {
       await this.load()
       return true
     }
@@ -226,5 +227,6 @@ export default class GoogleStorage implements IStorage {
     this.schema = schema
     this.schemaMetaStore = schemaMetaStore
     this.data = _.slice(rows, 1)
+    this.lastUpdated = new Date()
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "sheetsql",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Google Spreadsheet as a Database",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
