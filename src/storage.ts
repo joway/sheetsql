@@ -156,7 +156,7 @@ export default class GoogleStorage implements IStorage {
 
         await this.sheets.spreadsheets.values.update({
           spreadsheetId: this.db,
-          range: `A${rowNum + 2}`,
+          range: `${this.table}!A${rowNum + 2}`,
           valueInputOption: 'USER_ENTERED',
           requestBody: {
             values: [row],
@@ -184,7 +184,7 @@ export default class GoogleStorage implements IStorage {
 
         await this.sheets.spreadsheets.values.update({
           spreadsheetId: this.db,
-          range: `A${rowNum + 2}`,
+          range: `${this.table}!A${rowNum + 2}`,
           valueInputOption: 'USER_ENTERED',
           requestBody: {
             values: [emptyRow],

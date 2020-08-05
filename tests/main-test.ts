@@ -1,9 +1,10 @@
 import Database from '../src'
 
+// https://docs.google.com/spreadsheets/d/1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s/edit#gid=0
 const DB = '1ya2Tl2ev9M80xYwspv7FJaoWq0oVOMBk3VF0f0MXv2s'
 
-function getDB() {
-  return new Database({ db: DB, table: 'Sheet1', keyFile: './google-serviceaccount.json' })
+function getDB(table = 'Sheet1') {
+  return new Database({ db: DB, table, keyFile: './google-serviceaccount.json' })
 }
 
 beforeEach(async () => {
