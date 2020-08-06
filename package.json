@@ -1,6 +1,6 @@
 {
   "name": "sheetsql",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Google Spreadsheet as a Database",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -21,13 +21,13 @@
     "@types/jest": "^26.0.0",
     "@types/lodash": "^4.14.158",
     "@types/nedb": "^1.8.10",
-    "bluebird": "^3.5.3",
     "jest": "^24.9.0",
     "ts-jest": "^26.1.4",
     "tslint-jike-node": "0.0.18",
     "typescript": "^3.3.4000"
   },
   "dependencies": {
+    "bluebird": "^3.5.3",
     "googleapis": "^55.0.0",
     "lodash": "^4.17.19"
   }
