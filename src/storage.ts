@@ -117,10 +117,10 @@ export default class GoogleStorage implements IStorage {
     await this._checkCacheTimeout()
 
     const rows = _.map(docs, this._docToRow)
-
+    const range = this.table.includes('!') ? this.table : `${this.table}!A:A`
     await this.sheets.spreadsheets.values.append({
       spreadsheetId: this.db,
-      range: this.table,
+      range,
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: rows,
